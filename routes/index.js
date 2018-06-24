@@ -9,12 +9,12 @@ const Logger = require('../utils/logger');
 
 router.use(Logger.createMiddleware(Logger.formatLog, { stream: Logger.streamLog }));
 
+router.get('/', (req, res, next) => {
+  return res.json({ message: 'Thanks!' });
+});
+
 router.use('/api', api);
 router.use('/client', client);
-
-router.get('/', (req, res, next) => {
-  return next({ error: true });
-});
 
 router.all('*', (req, res) => {
   res.status(200).json([
@@ -62,7 +62,7 @@ router.all('*', (req, res) => {
 });
 
 router.use((data, req, res, next) => {
-  return res.status(500).json(data);
+  return res.status(200).json(data);
 });
 
 module.exports = router;
